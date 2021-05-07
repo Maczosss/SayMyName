@@ -1,0 +1,139 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateUser(
+  $input: CreateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  createUser(input: $input, condition: $condition) {
+    id
+    name
+    surname
+    phoneno
+    recording {
+      items {
+        id
+        date
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation UpdateUser(
+  $input: UpdateUserInput!
+  $condition: ModelUserConditionInput
+) {
+  updateUser(input: $input, condition: $condition) {
+    id
+    name
+    surname
+    phoneno
+    recording {
+      items {
+        id
+        date
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation DeleteUser(
+  $input: DeleteUserInput!
+  $condition: ModelUserConditionInput
+) {
+  deleteUser(input: $input, condition: $condition) {
+    id
+    name
+    surname
+    phoneno
+    recording {
+      items {
+        id
+        date
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+mutation CreateRecording(
+  $input: CreateRecordingInput!
+  $condition: ModelRecordingConditionInput
+) {
+  createRecording(input: $input, condition: $condition) {
+    id
+    date
+    user {
+      id
+      name
+      surname
+      phoneno
+      recording {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateRecording(
+  $input: UpdateRecordingInput!
+  $condition: ModelRecordingConditionInput
+) {
+  updateRecording(input: $input, condition: $condition) {
+    id
+    date
+    user {
+      id
+      name
+      surname
+      phoneno
+      recording {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteRecording(
+  $input: DeleteRecordingInput!
+  $condition: ModelRecordingConditionInput
+) {
+  deleteRecording(input: $input, condition: $condition) {
+    id
+    date
+    user {
+      id
+      name
+      surname
+      phoneno
+      recording {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}

@@ -1,0 +1,86 @@
+# this is an auto generated file. This will be overwritten
+query GetUser($id: ID!) {
+  getUser(id: $id) {
+    id
+    name
+    surname
+    phoneno
+    recording {
+      items {
+        id
+        date
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+    owner
+  }
+}
+query ListUsers(
+  $filter: ModelUserFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      name
+      surname
+      phoneno
+      recording {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    nextToken
+  }
+}
+query GetRecording($id: ID!) {
+  getRecording(id: $id) {
+    id
+    date
+    user {
+      id
+      name
+      surname
+      phoneno
+      recording {
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListRecordings(
+  $filter: ModelRecordingFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listRecordings(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      date
+      user {
+        id
+        name
+        surname
+        phoneno
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}

@@ -1,0 +1,13 @@
+type User @model @auth(rules: [{allow: owner, operations: [create, delete, update]}]) {
+id: ID!
+name: String
+surname: String
+phoneno: AWSPhone
+recording: [Recording] @connection(name: "UserRecordings")
+}
+
+type Recording @model{
+id: ID!
+date: AWSDateTime
+user: User @connection(name: "UserRecordings")
+}
