@@ -84,7 +84,7 @@
         app:srcCompat="@drawable/play" />
 
     <ImageButton
-        android:id="@+id/imageView3"
+        android:id="@+id/player_previous_button"
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:background="@color/colorPrimary"
@@ -97,7 +97,7 @@
         app:srcCompat="@drawable/rewind" />
 
     <ImageButton
-        android:id="@+id/imageView5"
+        android:id="@+id/player_next_button"
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:background="@color/colorPrimary"

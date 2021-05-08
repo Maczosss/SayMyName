@@ -25,6 +25,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class AudioListActivity extends AppCompatActivity implements AudioListAdapter.onItemListClick {
@@ -34,7 +39,10 @@ public class AudioListActivity extends AppCompatActivity implements AudioListAda
     private ConstraintLayout playerSheet;
     private BottomSheetBehavior bottomSheetBehavior;
     private RecyclerView audioList;
+    private Map<String, Integer> newAllFiles = new HashMap<>();
     private File[] allFiles;
+            int id = 0;
+
 
     private AudioListAdapter audioListAdapter;
 
@@ -45,6 +53,8 @@ public class AudioListActivity extends AppCompatActivity implements AudioListAda
 
     //UI elements buttons
     private ImageButton playButton;
+    private ImageButton nextButton;
+    private ImageButton previousButton;
     private TextView playerHeader;
     private TextView playerFileName;
 
@@ -62,6 +72,9 @@ public class AudioListActivity extends AppCompatActivity implements AudioListAda
         audioList = findViewById(R.id.audio_list_view);
 
         playButton = findViewById(R.id.player_play_button);
+        nextButton = findViewById(R.id.player_next_button);
+        previousButton = findViewById(R.id.player_previous_button);
+
         playerHeader = findViewById(R.id.player_header_title);
         playerFileName = findViewById(R.id.player_fileName);
 
@@ -70,6 +83,11 @@ public class AudioListActivity extends AppCompatActivity implements AudioListAda
         String recordPath = this.getExternalFilesDir("/").getAbsolutePath();
         File directory = new File(recordPath);
         allFiles = directory.listFiles();
+
+        for (File file : allFiles) {
+            newAllFiles.put(file.getName(), id);
+            id++;
+        }
 
         audioListAdapter = new AudioListAdapter(allFiles, this);
 
@@ -100,6 +118,29 @@ public class AudioListActivity extends AppCompatActivity implements AudioListAda
             }
         });
 
+        previousButton.setOnClickListener(v -> {
+            if(fileToPlay!=null) {
+                if (isPlaying) {
+                    pauseAudio();
+                    startPreviousAudio(true);
+                }
+                else
+                startPreviousAudio(false);
+            }
+
+        });
+
+        nextButton.setOnClickListener(v -> {
+            if (fileToPlay != null) {
+                if (isPlaying) {
+                    pauseAudio();
+                    startNextAudio(true);
+                }
+                else
+                startNextAudio(false);
+            }
+        });
+
         playerSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -120,6 +161,33 @@ public class AudioListActivity extends AppCompatActivity implements AudioListAda
                 }
             }
         });
+    }
+
+    private void startPreviousAudio(boolean wasPlaying) {
+        int position = newAllFiles.get(fileToPlay.getName());
+        if ((position-1) >= 0)
+            fileToPlay = allFiles[position-1];
+        if (wasPlaying) {
+            stopAudio();
+            playAudio(fileToPlay);
+        }
+        else{
+            playAudio(fileToPlay);
+        }
+    }
+
+    //next and previous buttons
+    private void startNextAudio(boolean wasPlaying) {
+        int position = newAllFiles.get(fileToPlay.getName());
+        if ((position + 1) < allFiles.length)
+            fileToPlay = allFiles[position + 1];
+        if (wasPlaying) {
+            stopAudio();
+            playAudio(fileToPlay);
+        }
+        else{
+            playAudio(fileToPlay);
+        }
     }
 
     @Override

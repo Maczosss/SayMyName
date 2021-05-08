@@ -99,7 +99,7 @@
         android:layout_marginBottom="244dp"
         android:background="@color/colorPrimary"
         android:onClick="onJoinPressed"
-        android:text="Join"
+        android:text="Sign in"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
