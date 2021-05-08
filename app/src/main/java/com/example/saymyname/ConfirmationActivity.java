@@ -9,9 +9,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amplifyframework.auth.AuthException;
+import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.auth.result.AuthSignInResult;
 import com.amplifyframework.auth.result.AuthSignUpResult;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.core.model.Model;
+import com.amplifyframework.datastore.DataStoreException;
+import com.amplifyframework.datastore.DataStoreItemChange;
+import com.amplifyframework.datastore.generated.model.User;
 
 public class ConfirmationActivity extends AppCompatActivity {
 
@@ -34,7 +39,7 @@ public class ConfirmationActivity extends AppCompatActivity {
     }
 
     private void confirmationSuccess(AuthSignUpResult authSignUpResult) {
-        reloginAfterConfirmation();        
+        reloginAfterConfirmation();
     }
 
     private void reloginAfterConfirmation() {
@@ -44,13 +49,36 @@ public class ConfirmationActivity extends AppCompatActivity {
         Amplify.Auth.signIn(
                 email,
                 password,
-                this::onSuccess,
+                this::onReloginSuccess,
                 this::confirmationError
         );
     }
 
-    private void onSuccess(AuthSignInResult authSignInResult) {
+    private void onReloginSuccess(AuthSignInResult authSignInResult) {
 
+        String currentUserID = Amplify.Auth.getCurrentUser().getUserId();
+
+        Amplify.DataStore.save(
+                User.builder().id(currentUserID)
+                        .name(getName())
+                        .surname(getSurname())
+                        .phoneno(getPhoneNo())
+                        .build(),
+                this::onSaveSuccess,
+                this::onError
+        );
+
+    }
+
+    private void onError(DataStoreException e) {
+        this.runOnUiThread(() -> {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        });
+    }
+
+    private <T extends Model> void onSaveSuccess(DataStoreItemChange<T> tDataStoreItemChange) {
+        Intent intent = new Intent(this, RecordingActivity.class);
+        startActivity(intent);
     }
 
     private void confirmationError(AuthException e) {
@@ -64,4 +92,10 @@ public class ConfirmationActivity extends AppCompatActivity {
     }
 
     private String getPassword() {return getIntent().getStringExtra("password");}
+
+    private String getName() {return getIntent().getStringExtra("name");}
+
+    private String getSurname() {return getIntent().getStringExtra("surname");}
+
+    private String getPhoneNo() {return getIntent().getStringExtra("phoneNo");}
 }

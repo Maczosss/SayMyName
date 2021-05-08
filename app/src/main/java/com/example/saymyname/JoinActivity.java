@@ -25,7 +25,7 @@ public class JoinActivity extends AppCompatActivity {
     public void onJoinPressed(View view) {
         EditText email = findViewById(R.id.txtEmail);
         EditText password = findViewById(R.id.txtPassword);
-        EditText name = findViewById(R.id.txtName);
+        //EditText name = findViewById(R.id.txtName);
 
         String txtEmail = email.getText().toString();
         String txtPassword = password.getText().toString();
@@ -60,8 +60,17 @@ public class JoinActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), ConfirmationActivity.class);
         EditText email = findViewById(R.id.txtEmail);
         EditText password = findViewById(R.id.txtPassword);
+        EditText name = findViewById(R.id.txtName);
+        EditText surname = findViewById(R.id.txtSurname);
+        EditText phoneNo = findViewById(R.id.txtPhoneNo);
+
+        //fields sent for confirmation activity for further user creation
         intent.putExtra("email", email.getText().toString());
         intent.putExtra("password", password.getText().toString());
+        intent.putExtra("name", name.getText().toString());
+        intent.putExtra("surname", surname.getText().toString());
+        intent.putExtra("phoneNo", phoneNo.getText().toString());
+
         startActivity(intent);
     }
 }

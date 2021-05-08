@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.saymyname">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:name=".SayMyName"
         android:allowBackup="true"
@@ -14,7 +16,8 @@
         tools:replace="android:name">
         <activity android:name=".ConfirmationActivity"></activity>
         <activity android:name=".JoinActivity" />
-        <activity android:name=".RecordingActivity" />
+        <activity
+            android:name=".RecordingActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -23,6 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

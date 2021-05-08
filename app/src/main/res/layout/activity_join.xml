@@ -20,6 +20,65 @@
         />
 
     <EditText
+        android:id="@+id/txtName"
+        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Name"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/txtSurname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtView"
+        app:layout_constraintVertical_bias="0.865"
+        />
+    <EditText
+        android:id="@+id/txtSurname"
+        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Surname"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/txtPhoneNo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtName"
+        app:layout_constraintVertical_bias="0.865"
+        />
+
+
+    <EditText
+        android:id="@+id/txtPhoneNo"
+        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Phone number"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/txtEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtName"
+        app:layout_constraintVertical_bias="0.865"
+        />
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPhoneNo"
+        app:layout_constraintVertical_bias="0.865"
+        />
+
+    <EditText
         android:id="@+id/txtPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,46 +109,8 @@
         app:layout_constraintVertical_bias="0.363"
         />
 
-    <EditText
-        android:id="@+id/txtEmail"
-        android:ems="10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.865"
-        />
 
-    <EditText
-        android:id="@+id/txtName"
-        android:ems="10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
-        android:hint="Name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/txtEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtView"
-        app:layout_constraintVertical_bias="0.865"
-        />
-    <EditText
-        android:id="@+id/txtPhoneNo"
-        android:ems="10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
-        android:hint="Phone number"
-        android:inputType="number"
-        app:layout_constraintBottom_toTopOf="@+id/txtEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.865"
-        />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
