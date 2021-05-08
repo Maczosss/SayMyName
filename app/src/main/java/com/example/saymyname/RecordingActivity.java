@@ -5,11 +5,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
@@ -54,14 +56,14 @@ public class RecordingActivity extends AppCompatActivity {
         listButton = findViewById(R.id.record_list_button);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Amplify.Auth.signOut(
-                this::onSuccess,
-                this::onError
-        );
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        Amplify.Auth.signOut(
+//                this::onSuccess,
+//                this::onError
+//        );
+//    }
 
     private void onError(AuthException e) {
         this.runOnUiThread(() -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show());
@@ -130,5 +132,10 @@ public class RecordingActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{recordPermission}, PERMISSION_CODE);
         }
         return false;
+    }
+
+    public void goToAudioList(View view) {
+        Intent intent = new Intent(this, AudioListActivity.class);
+        startActivity(intent);
     }
 }
