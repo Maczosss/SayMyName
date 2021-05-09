@@ -1,4 +1,4 @@
-package com.example.saymyname;
+package com.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.audio_list.TimeAgo;
+import com.example.saymyname.R;
+import com.types.TimeAgo;
 
 import java.io.File;
 

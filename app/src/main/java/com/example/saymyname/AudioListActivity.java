@@ -3,32 +3,25 @@ package com.example.saymyname;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.adapters.AudioListAdapter;
 import com.amplifyframework.auth.AuthException;
-import com.amplifyframework.core.Amplify;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 
@@ -41,7 +34,7 @@ public class AudioListActivity extends AppCompatActivity implements AudioListAda
     private RecyclerView audioList;
     private Map<String, Integer> newAllFiles = new HashMap<>();
     private File[] allFiles;
-            int id = 0;
+    int id = 0;
 
 
     private AudioListAdapter audioListAdapter;
