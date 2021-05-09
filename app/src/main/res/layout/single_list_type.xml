@@ -38,12 +38,4 @@
         app:layout_constraintBottom_toBottomOf="@+id/list_image_view"
         app:layout_constraintStart_toEndOf="@+id/list_image_view" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginEnd="20dp"
-        />
 </androidx.constraintlayout.widget.ConstraintLayout>
