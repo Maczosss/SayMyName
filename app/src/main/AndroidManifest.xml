@@ -15,9 +15,10 @@
         android:theme="@style/Theme.SayMyName"
         tools:replace="android:name">
         <activity android:name=".ConfirmationActivity"></activity>
+        <activity android:name=".RecordingTypesListActivity"/>
+        <activity android:name=".AudioListActivity"/>
         <activity android:name=".JoinActivity" />
-        <activity
-            android:name=".RecordingActivity" />
+        <activity android:name=".RecordingActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
