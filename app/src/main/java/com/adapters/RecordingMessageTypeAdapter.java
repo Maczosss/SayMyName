@@ -3,7 +3,6 @@ package com.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,15 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.saymyname.R;
 import com.types.RecordingMessage;
 
-import java.io.File;
-
 public class RecordingMessageTypeAdapter extends RecyclerView.Adapter<com.adapters.RecordingMessageTypeAdapter.RecordingMessageTypeViewHolder> {
 
     private RecordingMessage[] allTypes;
-    private onItemListClick onItemListClick;
+    private OnItemListClick onItemListClick;
     //private boolean isSelected = false;
 
-    public RecordingMessageTypeAdapter(RecordingMessage[] alltypes, onItemListClick onItemListClick) {
+    public RecordingMessageTypeAdapter(RecordingMessage[] alltypes, OnItemListClick onItemListClick) {
         this.allTypes = alltypes;
         this.onItemListClick = onItemListClick;
     }
@@ -68,7 +65,7 @@ public class RecordingMessageTypeAdapter extends RecyclerView.Adapter<com.adapte
         }
     }
 
-    public interface onItemListClick {
+    public interface OnItemListClick {
         void onClickListener(RecordingMessage messageType, int position);
     }
 }

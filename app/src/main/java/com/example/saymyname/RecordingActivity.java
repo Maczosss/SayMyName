@@ -18,8 +18,11 @@ import android.widget.Toast;
 
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.User;
+import com.amplifyframework.storage.StorageException;
+import com.amplifyframework.storage.result.StorageUploadFileResult;
 import com.types.RecordingMessage;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -117,22 +120,26 @@ public class RecordingActivity extends AppCompatActivity {
         Date now = new Date();
         //name of File
         textForRecord.setText("Say: " + type.getMessage());
+        if(currentUser!=null) {
+            recordFile = currentUser.getName() + "_" + currentUser.getSurname() + "_" + type.getName() + "-" + formatter.format(now) + ".3gp";
 
-        recordFile = currentUser.getName() + "_" + currentUser.getSurname() + "_" + type.getName() + "-" + formatter.format(now) + ".3gp";
+            fileNameText.setText("Recording, File name: " + recordFile);
 
-        fileNameText.setText("Recording, File name: " + recordFile);
-
-        mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setOutputFile(recordPath + "/" + recordFile);
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        try {
-            mediaRecorder.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
+            mediaRecorder = new MediaRecorder();
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mediaRecorder.setOutputFile(recordPath + "/" + recordFile);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            try {
+                mediaRecorder.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mediaRecorder.start();
         }
-        mediaRecorder.start();
+        else{
+            this.runOnUiThread(() -> Toast.makeText(getApplicationContext(), "There were problem with fetching user data", Toast.LENGTH_LONG).show());
+        }
     }
 
     private boolean checkPermissions() {
@@ -169,5 +176,11 @@ public class RecordingActivity extends AppCompatActivity {
                 },
                 failure -> Log.e("SayMyNameApp", "Query failed.", failure)
         );
+        System.out.println("test");
+    }
+
+    public void goToTransactionActivity(View view) {
+        Intent intent = new Intent(this, TransactionActivity.class);
+        startActivity(intent);
     }
 }

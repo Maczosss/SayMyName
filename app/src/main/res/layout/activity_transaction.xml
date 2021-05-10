@@ -4,13 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".RecordingTypesListActivity"
+    tools:context=".TransactionActivity"
     android:background="@color/white">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recording_type_list_view"
+        android:layout_marginTop="100dp"
+        android:id="@+id/transaction_recording_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
+    <include layout="@layout/list_control_buttons"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

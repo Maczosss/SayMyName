@@ -20,6 +20,7 @@
         <activity android:name=".RecordingTypesListActivity"/>
         <activity android:name=".AudioListActivity"/>
         <activity android:name=".JoinActivity" />
+        <activity android:name=".TransactionActivity"/>
         <activity android:name=".RecordingActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity">
