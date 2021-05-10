@@ -2,7 +2,6 @@ package com.example.saymyname;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.navigation.NavController;
 
 import android.Manifest;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
@@ -18,16 +16,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amplifyframework.auth.AuthException;
 import com.amplifyframework.core.Amplify;
-import com.types.CheckFiles;
+import com.amplifyframework.datastore.generated.model.User;
+import com.amplifyframework.storage.StorageException;
+import com.amplifyframework.storage.result.StorageUploadFileResult;
 import com.types.RecordingMessage;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class RecordingActivity extends AppCompatActivity {
 
@@ -41,6 +42,9 @@ public class RecordingActivity extends AppCompatActivity {
     private TextView fileNameText;
     private RecordingMessage typeToRecord;
     private int typeOrdinal = -1;
+    //current user data downloaded from Amplify
+    private User currentUser;
+    //Map<String, String> currentUserData = new HashMap<>();
 
     //storing files
     String recordFile;
@@ -60,29 +64,16 @@ public class RecordingActivity extends AppCompatActivity {
         fileNameText = findViewById(R.id.record_filename);
         recordButton = findViewById(R.id.record_button);
         listButton = findViewById(R.id.record_list_button);
+
+        //geting name and surname from datastore
+        getUserData();
+
         if (getIntent().getIntExtra("type", -1) != -1) {
             typeOrdinal = getIntent().getIntExtra("type", -1);
         } else
             typeOrdinal = -1;
     }
 
-    //Amplify logOut, for further implementation
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        Amplify.Auth.signOut(
-//                this::onSuccess,
-//                this::onError
-//        );
-//    }
-//
-//    private void onError(AuthException e) {
-//        this.runOnUiThread(() -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show());
-//    }
-//
-//    private void onSuccess() {
-//        this.runOnUiThread(() -> Toast.makeText(getApplicationContext(), "log out success", Toast.LENGTH_LONG).show());
-//    }
 
     public void recordButton(View view) {
         if (getIntent().getIntExtra("type", -1) == -1) {
@@ -129,22 +120,26 @@ public class RecordingActivity extends AppCompatActivity {
         Date now = new Date();
         //name of File
         textForRecord.setText("Say: " + type.getMessage());
+        if(currentUser!=null) {
+            recordFile = currentUser.getName() + "_" + currentUser.getSurname() + "_" + type.getName() + "-" + formatter.format(now) + ".3gp";
 
-        recordFile = type.getName() + "-" + formatter.format(now) + ".3gp";
+            fileNameText.setText("Recording, File name: " + recordFile);
 
-        fileNameText.setText("Recording, File name: " + recordFile);
-
-        mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setOutputFile(recordPath + "/" + recordFile);
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        try {
-            mediaRecorder.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
+            mediaRecorder = new MediaRecorder();
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mediaRecorder.setOutputFile(recordPath + "/" + recordFile);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            try {
+                mediaRecorder.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mediaRecorder.start();
         }
-        mediaRecorder.start();
+        else{
+            this.runOnUiThread(() -> Toast.makeText(getApplicationContext(), "There were problem with fetching user data", Toast.LENGTH_LONG).show());
+        }
     }
 
     private boolean checkPermissions() {
@@ -168,5 +163,24 @@ public class RecordingActivity extends AppCompatActivity {
 
     private RecordingMessage getType(int i) {
         return RecordingMessage.getById(i);
+    }
+
+    private void getUserData() {
+        Amplify.DataStore.query(User.class,
+                allPosts -> {
+                    while (allPosts.hasNext()) {
+                        User user = allPosts.next();
+                        this.currentUser = user;
+                        Log.i("SayMyNameApp", "data download compleated for user: " + user.getName() + " " + user.getSurname());
+                    }
+                },
+                failure -> Log.e("SayMyNameApp", "Query failed.", failure)
+        );
+        System.out.println("test");
+    }
+
+    public void goToTransactionActivity(View view) {
+        Intent intent = new Intent(this, TransactionActivity.class);
+        startActivity(intent);
     }
 }

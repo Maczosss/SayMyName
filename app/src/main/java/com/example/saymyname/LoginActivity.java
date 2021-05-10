@@ -9,10 +9,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.amazonaws.mobileconnectors.cognitoauth.Auth;
+import com.amazonaws.services.cognitoidentityprovider.model.UserNotConfirmedException;
 import com.amplifyframework.auth.AuthException;
+import com.amplifyframework.auth.AuthUser;
 import com.amplifyframework.auth.result.AuthSignInResult;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Recording;
+import com.amplifyframework.datastore.generated.model.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -46,9 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void onLoginError(AuthException e) {
-        this.runOnUiThread(() -> {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-        });
+        this.runOnUiThread(() -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show());
     }
 
     private void onLoginSuccess(AuthSignInResult authSignInResult) {
