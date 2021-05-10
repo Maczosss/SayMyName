@@ -278,4 +278,14 @@ public class AudioListActivity extends AppCompatActivity implements AudioListAda
     private void onSuccess() {
         this.runOnUiThread(() -> Toast.makeText(getApplicationContext(), "log out success", Toast.LENGTH_LONG).show());
     }
+
+    //probably for change
+
+    public void deleteSelectedFiles(View view) {
+
+    }
+
+    public void sendSelectedFiles(View view) {
+
+    }
 }
