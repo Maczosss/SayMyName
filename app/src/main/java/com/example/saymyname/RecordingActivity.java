@@ -16,6 +16,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amplifyframework.auth.AuthException;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthSession;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.User;
 import com.amplifyframework.storage.StorageException;
@@ -66,6 +69,15 @@ public class RecordingActivity extends AppCompatActivity {
         listButton = findViewById(R.id.record_list_button);
 
         //geting name and surname from datastore
+//        Runnable r = this::getUserData;
+//
+//        Thread t = new Thread(r);
+//        t.start();
+//        try {
+//            t.join();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         getUserData();
 
         if (getIntent().getIntExtra("type", -1) != -1) {
@@ -120,9 +132,12 @@ public class RecordingActivity extends AppCompatActivity {
         Date now = new Date();
         //name of File
         textForRecord.setText("Say: " + type.getMessage());
-        if(currentUser!=null) {
+        if(currentUser==null){
+            recordFile = "Maciej_Jaremowicz_" + type.getName() + "-" + formatter.format(now) + ".3gp";
+        }
+        else {
             recordFile = currentUser.getName() + "_" + currentUser.getSurname() + "_" + type.getName() + "-" + formatter.format(now) + ".3gp";
-
+        }
             fileNameText.setText("Recording, File name: " + recordFile);
 
             mediaRecorder = new MediaRecorder();
@@ -136,10 +151,10 @@ public class RecordingActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             mediaRecorder.start();
-        }
-        else{
-            this.runOnUiThread(() -> Toast.makeText(getApplicationContext(), "There were problem with fetching user data", Toast.LENGTH_LONG).show());
-        }
+
+//        else{
+//            this.runOnUiThread(() -> Toast.makeText(getApplicationContext(), "There were problem with fetching user data", Toast.LENGTH_LONG).show());
+//        }
     }
 
     private boolean checkPermissions() {
@@ -166,17 +181,18 @@ public class RecordingActivity extends AppCompatActivity {
     }
 
     private void getUserData() {
-        Amplify.DataStore.query(User.class,
-                allPosts -> {
-                    while (allPosts.hasNext()) {
-                        User user = allPosts.next();
-                        this.currentUser = user;
-                        Log.i("SayMyNameApp", "data download compleated for user: " + user.getName() + " " + user.getSurname());
-                    }
-                },
-                failure -> Log.e("SayMyNameApp", "Query failed.", failure)
-        );
-        System.out.println("test");
+            Amplify.DataStore.query(User.class,
+                    allPosts -> {
+                        while (allPosts.hasNext()) {
+                            User user = allPosts.next();
+                            this.currentUser = user;
+                            Log.i("SayMyNameApp", "data download compleated for user: " + user.getName() + " " + user.getSurname());
+                        }
+                    },
+                    failure -> Log.e("SayMyNameApp", "Query failed.", failure)
+            );
+            System.out.println("test");
+
     }
 
     public void goToTransactionActivity(View view) {

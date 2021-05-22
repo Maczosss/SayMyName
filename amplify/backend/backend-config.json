@@ -5,11 +5,15 @@
       "providerPlugin": "awscloudformation",
       "output": {
         "authConfig": {
-          "additionalAuthenticationProviders": [],
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ],
           "defaultAuthentication": {
             "authenticationType": "AMAZON_COGNITO_USER_POOLS",
             "userPoolConfig": {
-              "userPoolId": "authsaymyname1135e0bc"
+              "userPoolId": "authsaymyname1135e0bc_userpool_1135e0bc"
             }
           }
         }
@@ -22,6 +26,12 @@
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false
+    }
+  },
+  "storage": {
+    "recording": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
     }
   }
 }
